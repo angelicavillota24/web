@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Gas - Venta de Gas</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/templatemo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+
+    <!-- Estilo personalizado para los botones de redes sociales -->
+    <style>
+        .hover-azul {
+            transition: all 0.5s ease; /* Suaviza la transición */
+        }
+
+        .hover-azul:hover {
+            background-color: #e9e5e7; /* Fondo azul al hacer hover */
+            border-color: #050505; /* Borde azul al hacer hover */
+            color: white; /* Texto blanco al hacer hover */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand text-primary logo h1 align-self-center" href="index.html">
+                Gas Oliv
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="align-self-center collapse navbar-collapse flex-fill d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">INICIO</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">INVENTARIO</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shop.html">REGISTRO VENTA</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Fin Header -->
+
+    <!-- Sección de Inventario -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">INVENTARIO DE GAS</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <form id="formAgregarGas" class="mb-4">
+                        <div class="mb-3">
+                            <label for="tipo-gas" class="form-label">Tipo de Gas</label>
+                            <select class="form-select" id="tipo-gas" required>
+                                <option value="Propano 40 lb">Propano 40 lb</option>
+                                <option value="Propano 100 lb">Propano 100 lb</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cantidad" class="form-label">Cantidad (unidades)</label>
+                            <input type="number" class="form-control" id="cantidad" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="precio" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="precio" step="0.01" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Actualizar Inventario</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tipo de Gas</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaInventario">
+                            <!-- Filas predefinidas -->
+                            <tr id="propano-40">
+                                <td>Propano 40 lb</td>
+                                <td>0</td> <!-- Cantidad inicial -->
+                                <td>0.00</td> <!-- Precio inicial (sin $) -->
+                                <td>
+                                    <button class="btn btn-warning btn-sm">Editar</button>
+                                    <button class="btn btn-danger btn-sm">Eliminar</button>
+                                </td>
+                            </tr>
+                            <tr id="propano-100">
+                                <td>Propano 100 lb</td>
+                                <td>0</td> <!-- Cantidad inicial -->
+                                <td>0.00</td> <!-- Precio inicial (sin $) -->
+                                <td>
+                                    <button class="btn btn-warning btn-sm">Editar</button>
+                                    <button class="btn btn-danger btn-sm">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Fin Sección de Inventario -->
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <!-- Contenido del footer -->
+        </div>
+    </footer>
+    <!-- Fin Footer -->
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts personalizados -->
+    <script>
+        // Script para manejar el formulario de inventario
+        document.getElementById("formAgregarGas").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Obtener los valores del formulario
+            const tipoGas = document.getElementById("tipo-gas").value;
+            const cantidad = parseInt(document.getElementById("cantidad").value);
+            const precio = parseFloat(document.getElementById("precio").value);
+
+            // Buscar la fila correspondiente al tipo de gas
+            const filaId = tipoGas.toLowerCase().replace(/ /g, "-"); // Convierte "Propano 40 lb" a "propano-40-lb"
+            const fila = document.getElementById(filaId);
+
+            if (fila) {
+                // Actualizar la cantidad y el precio (sin sumar)
+                const celdas = fila.getElementsByTagName("td");
+                celdas[1].textContent = cantidad; // Actualizar cantidad
+                celdas[2].textContent = precio.toFixed(2); // Actualizar precio (sin $)
+            }
+
+            // Limpiar el formulario
+            this.reset();
+        });
+
+        // Funcionalidad para eliminar una fila (resetear valores)
+        document.getElementById("tablaInventario").addEventListener("click", function (e) {
+            if (e.target.classList.contains("btn-danger")) {
+                const fila = e.target.closest("tr");
+                const celdas = fila.getElementsByTagName("td");
+                celdas[1].textContent = "0"; // Resetear cantidad
+                celdas[2].textContent = "0.00"; // Resetear precio (sin $)
+            }
+        });
+
+        // Funcionalidad para editar una fila
+        document.getElementById("tablaInventario").addEventListener("click", function (e) {
+            if (e.target.classList.contains("btn-warning")) {
+                const fila = e.target.closest("tr");
+                const celdas = fila.getElementsByTagName("td");
+
+                // Llenar el formulario con los datos de la fila
+                document.getElementById("tipo-gas").value = celdas[0].textContent;
+                document.getElementById("cantidad").value = parseInt(celdas[1].textContent);
+                document.getElementById("precio").value = parseFloat(celdas[2].textContent);
+            }
+        });
+    </script>
+</body>
+
+</html>

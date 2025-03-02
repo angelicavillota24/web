@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Gas - Venta de Gas</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/templatemo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+
+    <!-- Estilo personalizado para los botones de redes sociales -->
+    <style>
+        .hover-azul {
+            transition: all 0.5s ease; /* Suaviza la transición */
+        }
+
+        .hover-azul:hover {
+            background-color: #e9e5e7; /* Fondo azul al hacer hover */
+            border-color: #050505; /* Borde azul al hacer hover */
+            color: white; /* Texto blanco al hacer hover */
+        }
+
+        /* Estilos adicionales para el formulario */
+        .form-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .total-acumulado {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .mensaje-confirmacion {
+            display: none; /* Ocultar inicialmente */
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 5px;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand text-primary logo h1 align-self-center" href="index.html">
+                Gas Oliv
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="align-self-center collapse navbar-collapse flex-fill d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">INICIO</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">INVENTARIO</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shop.html">REGISTRO VENTA</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Fin Header -->
+
+    <!-- Sección de Registro de Ventas -->
+    <div class="container-fluid pt-5">
+        <div class="container">
+            <div class="section-title">
+                <h4 class="text-primary text-uppercase" style="letter-spacing: 5px; font-size: 2.5rem;">VENTAS</h4>
+            </div>
+            <div class="row">
+                <!-- Formulario de registro de venta -->
+                <div class="col-lg-12 mb-5">
+                    <h2>Registrar Venta</h2>
+                    <form id="formVenta">
+                        <!-- Fila 1: Tipo de Gas y Cantidad -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="gas_type" class="form-label">Tipo de Gas:</label>
+                                <select class="form-select" id="gas_type" name="gas_type" required>
+                                    <option value="Propano 40 lb">Propano 40 lb</option>
+                                    <option value="Propano 100 lb">Propano 100 lb</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="quantity" class="form-label">Cantidad (unidades):</label>
+                                <input type="number" class="form-control" id="quantity" name="quantity" required>
+                            </div>
+                        </div>
+
+                        <!-- Fila 2: Cliente y Cédula -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="customer_name" class="form-label">Cliente:</label>
+                                <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="id_number" class="form-label">Cédula:</label>
+                                <input type="number" class="form-control" id="id_number" name="id_number" required>
+                            </div>
+                        </div>
+
+                        <!-- Fila 3: Precio -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="price" class="form-label">Precio por unidad:</label>
+                                <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                            </div>
+                        </div>
+
+                        <!-- Fila 4: Subsidio -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Subsidio:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="subsidy_si" name="subsidy" value="sí" required>
+                                    <label class="form-check-label" for="subsidy_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="subsidy_no" name="subsidy" value="no" required>
+                                    <label class="form-check-label" for="subsidy_no">No</label>
+                                </div>
+                            </div>
+
+                            <!-- Fila 4: A Full -->
+                            <div class="col-md-6">
+                                <label class="form-label">A Full:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="full_si" name="full" value="sí" required>
+                                    <label class="form-check-label" for="full_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="full_no" name="full" value="no" required>
+                                    <label class="form-check-label" for="full_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fila 5: Cilindro -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Cilindro:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="cilindro_trae" name="cilindro" value="trae" required>
+                                    <label class="form-check-label" for="cilindro_trae">Trae cilindro</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="cilindro_debe" name="cilindro" value="debe" required>
+                                    <label class="form-check-label" for="cilindro_debe">Debe cilindro</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fila 6: Fecha y Hora de Venta -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="fecha_venta" class="form-label">Fecha de Venta:</label>
+                                <input type="date" class="form-control" id="fecha_venta" name="fecha_venta" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="hora_venta" class="form-label">Hora de Venta:</label>
+                                <input type="time" class="form-control" id="hora_venta" name="hora_venta" required>
+                            </div>
+                        </div>
+
+                        <!-- Botón de enviar -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">Registrar Venta</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Mensaje de confirmación -->
+                    <div id="mensajeConfirmacion" class="mensaje-confirmacion">
+                        ¡Venta registrada correctamente! <a href="index.html">Volver al inicio</a>
+                    </div>
+
+                    <!-- Sección para mostrar el total acumulado -->
+                    <div class="mt-4">
+                        <h3>Total Acumulado de Ventas:</h3>
+                        <p class="total-acumulado" id="totalAcumulado">0.00</p> <!-- Sin símbolo de dólar -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Sección de Registro de Ventas -->
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <!-- Contenido del footer -->
+        </div>
+    </footer>
+    <!-- Fin Footer -->
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts personalizados -->
+    <script>
+        // Script para manejar el formulario de ventas
+        document.getElementById("formVenta").addEventListener("submit", function (e) {
+            e.preventDefault(); // Evitar que el formulario se envíe
+
+            // Simular el envío de datos
+            const mensajeConfirmacion = document.getElementById("mensajeConfirmacion");
+            mensajeConfirmacion.style.display = "block"; // Mostrar el mensaje de confirmación
+
+            // Limpiar el formulario
+            this.reset();
+        });
+    </script>
+</body>
+
+</html>
